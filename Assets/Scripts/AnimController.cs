@@ -1,39 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+/*using System;
 using UnityEngine;
 
-public class AnimController : MonoBehaviour
+public class CharacterController : MonoBehaviour
 {
-    private Animator animator; // 애니메이터 컴포넌트를 참조할 변수
-    private float movementSpeed; // 캐릭터의 움직임 속도를 저장할 변수
+    internal bool isGrounded;
+    private Animator animator; // 애니메이터 참조
+
+    internal void Move(Vector3 vector3)
+    {
+        throw new NotImplementedException();
+    }
 
     void Start()
     {
-        animator = GetComponent<Animator>(); // 시작할 때 애니메이터 컴포넌트를 가져옵니다.
+        animator = GetComponent<Animator>(); // 애니메이터 컴포넌트 참조를 가져옴
     }
 
     void Update()
     {
-        // 플레이어 입력 받기
-        float horizontal = Input.GetAxis("Horizontal"); // 수평 입력
-        float vertical = Input.GetAxis("Vertical"); // 수직 입력
-        movementSpeed = Mathf.Max(Mathf.Abs(horizontal), Mathf.Abs(vertical)); // 가장 큰 입력 값을 속도로 사용
-
-        // 애니메이터에 속도 값 설정
-        animator.SetFloat("Speed", movementSpeed);
-
-        // 캐릭터 움직임 처리
-        Vector3 movement = new Vector3(horizontal, 0, vertical) * Time.deltaTime;
-        transform.Translate(movement, Space.World); // 캐릭터 위치 이동
-
-        // 애니메이션 상태 제어
-        if (movementSpeed > 0)
+        // 걷기 입력을 받았을 때 (예: "W" 키를 누르고 있을 때)
+        if (Input.GetKey(KeyCode.W))
         {
-            animator.SetBool("IsWalking", true); // 움직이면 walk 애니메이션
+            animator.SetBool("IsWalking", true); // "IsWalking" 불리언 파라미터를 참으로 설정
         }
         else
         {
-            animator.SetBool("IsWalking", false); // 정지하면 idle 애니메이션
+            animator.SetBool("IsWalking", false); // "IsWalking" 불리언 파라미터를 거짓으로 설정
         }
     }
 }
+*/

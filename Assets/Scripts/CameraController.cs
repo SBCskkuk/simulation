@@ -1,27 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraFollow : MonoBehaviour
 {
-    public Transform playerBody; // 캐릭터의 Transform 참조
-    public float sensitivity = 500f; // 마우스 민감도
-    private float rotationX = 0f; // 초기 X축 회전 각도 설정 (시작 각도)
+    public GameObject player; // 바라볼 플레이어 오브젝트입니다.
+    public float xmove = 0;  // X축 누적 이동량
+    public float ymove = 0;  // Y축 누적 이동량
+    public float distance = 3;
 
-    void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked; // 게임 중 커서 숨김
-    }
-
+    // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime; // 마우스 X축 움직임
-        float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime; // 마우스 Y축 움직임
-
-        rotationX -= mouseY; // 수직 회전 계산
-        rotationX = Mathf.Clamp(rotationX, -75f, 60f); // 인간의 시야 범위에 맞춰 수직 회전을 -75도에서 60도로 제한
-
-        transform.localEulerAngles = new Vector3(rotationX, playerBody.eulerAngles.y, 0f); // 카메라의 수직 회전 적용, 수평 회전은 캐릭터의 회전을 따름
-        playerBody.Rotate(Vector3.up * mouseX); // 캐릭터의 수평 회전 적용
+        //  마우스 우클릭 중에만 카메라 무빙 적용
+        if (Input.GetMouseButton(1))
+        {
+            xmove += Input.GetAxis("Mouse X"); // 마우스의 좌우 이동량을 xmove 에 누적합니다.
+            ymove -= Input.GetAxis("Mouse Y"); // 마우스의 상하 이동량을 ymove 에 누적합니다.
+        }
+        transform.rotation = Quaternion.Euler(ymove, xmove, 0); // 이동량에 따라 카메라의 바라보는 방향을 조정합니다.
+        Vector3 reverseDistance = new Vector3(0.0f, 0.0f, distance); // 카메라가 바라보는 앞방향은 Z 축입니다. 이동량에 따른 Z 축방향의 벡터를 구합니다.
+        transform.position = player.transform.position - transform.rotation * reverseDistance; // 플레이어의 위치에서 카메라가 바라보는 방향에 벡터값을 적용한 상대 좌표를 차감합니다.
     }
 }
