@@ -1,3 +1,5 @@
+using StarterAssets;
+using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -7,14 +9,43 @@ public class UIManager : MonoBehaviour
     private Vector3 originalScale; // 원래 스케일 저장
     private Vector2 originalPosition; // 원래 위치 저장
 
+    public TMP_InputField inputField;
+    public ThirdPersonController playerController;
+
+
+    
     private void Awake()
     {
         // 원래 스케일과 위치를 저장합니다.
         originalScale = disasterReportPanel.transform.localScale;
         originalPosition = disasterReportPanel.GetComponent<RectTransform>().anchoredPosition;
+
+        inputField.onSelect.AddListener(delegate { DisablePlayerControls(); });
+        inputField.onDeselect.AddListener(delegate { EnablePlayerControls(); });
+    }
+    private void DisablePlayerControls()
+    {
+        // 플레이어 컨트롤을 비활성화합니다.
+        if (playerController != null)
+        {
+            playerController.enabled = false;
+        }
+        // 커서 설정을 해제합니다.
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
-    // Update 메서드에서 키 입력을 체크합니다.
+    private void EnablePlayerControls()
+    {
+        // 입력 필드에서 벗어나면 플레이어 컨트롤을 다시 활성화합니다.
+        if (playerController != null)
+        {
+            playerController.enabled = true;
+        }
+        // 게임에 맞게 커서 설정을 다시 적용합니다.
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
     void Update()
     {
         // 엔터키가 눌렸는지 확인합니다.
@@ -30,6 +61,9 @@ public class UIManager : MonoBehaviour
             {
                 // 스케일을 모두 1로 설정하고, Y 위치를 70으로 조정하여 중앙에 위치합니다.
                 SetDisasterReportScale(Vector3.one, 70f);
+                // 커서 활성화
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
         }
 
@@ -38,6 +72,9 @@ public class UIManager : MonoBehaviour
         {
             // 스케일과 위치를 원래대로 복원합니다.
             RestoreDisasterReportScaleAndPosition();
+            // 커서 비활성화
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 

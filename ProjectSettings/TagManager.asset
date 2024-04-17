@@ -6,6 +6,8 @@ TagManager:
   tags:
   - CinemachineTarget
   - WildFire
+  - Obstacle
+  - ground
   layers:
   - Default
   - TransparentFX
