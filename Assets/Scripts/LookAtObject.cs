@@ -17,10 +17,17 @@ public class LookAtObject : MonoBehaviour
             // 태그가 'WildFire'인 오브젝트를 바라보고 있는지 확인
             if (hit.collider.CompareTag("WildFire"))
             {
-                // 각 TextMeshProUGUI에 메시지를 작성
+                // 각 TextMeshProUGUI에 메시지를 작성 , 재난발생 개요 
                 textDisplays[0].text = "2024-nn-nn";
                 textDisplays[1].text = "하남스타필드 CGV";
                 textDisplays[2].text = "화재 발생";
+                // 피해 내용
+                textDisplays[3].text = "인명 피해 현재 없음";
+                textDisplays[4].text = "재산 피해 산정중";
+                // 동원 자원 
+                textDisplays[5].text = "현재 없음";
+                textDisplays[6].text = "현장 인원1명 ";
+                textDisplays[7].text = "현재 없음";
             }
         }
     }
